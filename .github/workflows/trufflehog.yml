@@ -19,7 +19,7 @@ jobs:
       run: pip install truffleHog
 
     - name: Run TruffleHog
-      run: trufflehog --json https://github.com/${{ github.repository }} > trufflehog_report.json
+      run: trufflehog --json https://github.com/ArthurDDev/test-actions/ > trufflehog_report.json
 
     - name: Check for secrets
       run: |
