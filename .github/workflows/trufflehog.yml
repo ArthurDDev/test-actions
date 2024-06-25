@@ -25,7 +25,7 @@ jobs:
       run: pip install truffleHog
 
     - name: Run TruffleHog
-      run: trufflehog filesystem --json . > trufflehog_report.json
+      run: trufflehog --json .
 
     - name: Check for secrets
       run: |
@@ -41,3 +41,4 @@ jobs:
       with:
         name: trufflehog-report
         path: trufflehog_report.json
+
