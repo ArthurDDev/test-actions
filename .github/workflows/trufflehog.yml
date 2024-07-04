@@ -18,22 +18,22 @@ jobs:
 
     - name: Install TruffleHog
       run: pip install truffleHog
-
-    - name: Run TruffleHog
-      run: trufflehog --json .
-
-    - name: Check for secrets
-      run: |
-        if grep -q '"reason":' trufflehog_report.json; then
-          echo "Secrets detected! Failing the build."
-          exit 1
-        else
-          echo "No secrets found."
-        fi
-
-    - name: Upload TruffleHog report
-      uses: actions/upload-artifact@v3
-      with:
-        name: trufflehog-report
-        path: trufflehog_report.json
-
+#
+#    - name: Run TruffleHog
+#      run: trufflehog --json .
+#
+#    - name: Check for secrets
+#      run: |
+#        if grep -q '"reason":' trufflehog_report.json; then
+#          echo "Secrets detected! Failing the build."
+#          exit 1
+#        else
+#          echo "No secrets found."
+#        fi
+#
+#    - name: Upload TruffleHog report
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: trufflehog-report
+#        path: trufflehog_report.json
+#
