@@ -1,7 +1,7 @@
 name: TruffleHog Scan
 
 on:
-  [push]
+  workflow_dispatch:
 
 jobs:
   trufflehog-scan:
