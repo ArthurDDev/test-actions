@@ -21,7 +21,7 @@ jobs:
             && PID=$(cat PID) \
             && kill $PID \
             && cd /var/www/html/test-actions \
-            && git pull \
+            && git pull
             && cd /var/www/html/test-actions/back-end \
             && php artisan key:generate \
             && php artisan migrate:fresh --seed \

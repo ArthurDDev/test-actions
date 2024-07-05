@@ -42,7 +42,7 @@
 			<p>
 				6.
 				<strong style="color: #00dc80">
-					ESSE TEXTO FOI MODIFICADO E AUTOMATICAMENTE FEITO O DEPLOY (tomara, cree em deus pai todo poderoso)
+					E por fim, não hesitem em perguntar, somos todos ECOMP
 				</strong>
 			</p>
 		</div>
