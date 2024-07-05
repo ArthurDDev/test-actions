@@ -19,21 +19,21 @@ jobs:
         username: root
         password: ${{ secrets.PASSWORD }}
         script: |
-          docker exec ubuntu /bin/bash -c '
-            cd /var/www/html/PROJETO/front-end 
-            && PID=$(cat PID)
-            && kill $PID
-            && cd /var/www/html/PROJETO
-            && git pull
-            && cd /var/www/html/PROJETO/back-end
-            && php artisan key:generate;
-            && php artisan migrate:fresh --seed;
-            && php artisan passport:install;
-            && php artisan passport:client --personal;
-            && php artisan storage:link;
-            && cd /var/www/html/PROJETO/front-end
-            && npm run build
-            && nohup node .output/server/index.mjs &
-            && lsof -i :3000 | awk 'NR > 1 {print $2}' > PID
-            && service nginx restart
+          docker exec ubuntu /bin/bash -c '\
+            cd /var/www/html/PROJETO/front-end \
+            && PID=$(cat PID) \
+            && kill $PID \
+            && cd /var/www/html/PROJETO \
+            && git pull \
+            && cd /var/www/html/PROJETO/back-end \
+            && php artisan key:generate \
+            && php artisan migrate:fresh --seed \
+            && php artisan passport:install \
+            && php artisan passport:client --personal \
+            && php artisan storage:link \
+            && cd /var/www/html/PROJETO/front-end \
+            && npm run build \
+            && nohup node .output/server/index.mjs & \
+            && lsof -i :3000 | awk 'NR > 1 {print $2}' > PID \
+            && service nginx restart \
           '
