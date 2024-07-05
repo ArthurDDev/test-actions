@@ -16,5 +16,4 @@ jobs:
         username: root
         password: ${{ secrets.PASSWORD }}
         script: |
-          docker exec -it ubuntu /bin/bash
-          bash /root/script.sh
+          docker exec ubuntu /bin/bash -c 'bash /root/script.sh'
