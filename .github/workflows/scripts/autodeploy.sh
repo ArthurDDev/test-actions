@@ -1,3 +1,5 @@
+PATH="/root/.nvm/versions/node/v21.7.3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+echo $PATH
 cd /var/www/html/test-actions/front-end
 PID=$(cat PID)
 kill $PID
