@@ -1,5 +1,11 @@
 name: testing out ssh
-on: [workflow_dispatch]
+
+on:
+  [workflow_dispatch]
+
+env:
+  PROJETO: 'test-actions'
+
 jobs:
 
   build:
@@ -12,4 +18,20 @@ jobs:
         host: ${{ secrets.HOST }}
         username: root
         password: ${{ secrets.PASSWORD }}
-        script: whoami
+        script: |
+          cd /var/www/html/PROJETO/front-end
+          PID = $(cat PID)
+          kill $PID
+          cd /var/www/html/PROJETO
+          git pull
+          cd /var/www/html/PROJETO/back-end
+          php artisan key:generate;
+          php artisan migrate:fresh --seed;
+          php artisan passport:install;
+          php artisan passport:client --personal;
+          php artisan storage:link;
+          cd /var/www/html/PROJETO/front-end
+          npm run build
+          nohup node .output/server/index.mjs &
+          lsof -i :3000 | awk 'NR > 1 {print $2}' > PID
+          service nginx restart
