@@ -19,7 +19,7 @@ jobs:
         username: root
         password: ${{ secrets.PASSWORD }}
         script: |
-          docker exec -it -t ubuntu /bin/bash
+          docker exec ubuntu /bin/bash
           cd /var/www/html/PROJETO/front-end
           PID=$(cat PID)
           kill $PID
