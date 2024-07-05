@@ -10,7 +10,7 @@
 			"
 			class="text-center d-flex flex-column justify-center align-center"
 		>
-			<h1 style="color: #00dc80">Bem-vindo(a) ao Projeto Base de 2024</h1>
+			<h1 style="color: #00dc80">Bem-vindo(a) ao Projeto Base de 2077</h1>
 			<p>
 				1. Olhem e pesquisem sobre a estrutura das Pastas NUXT no drive
 				de Projetos antes de iniciar
