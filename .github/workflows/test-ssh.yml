@@ -3,9 +3,6 @@ name: testing out ssh
 on:
   [workflow_dispatch]
 
-env:
-  PROJETO: 'test-actions'
-
 jobs:
 
   build:
@@ -20,20 +17,20 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         script: |
           docker exec ubuntu /bin/bash -c '\
-            cd /var/www/html/PROJETO/front-end \
+            cd /var/www/html/test-actions/front-end \
             && PID=$(cat PID) \
             && kill $PID \
-            && cd /var/www/html/PROJETO \
+            && cd /var/www/html/test-actions \
             && git pull \
-            && cd /var/www/html/PROJETO/back-end \
+            && cd /var/www/html/test-actions/back-end \
             && php artisan key:generate \
             && php artisan migrate:fresh --seed \
             && php artisan passport:install \
             && php artisan passport:client --personal \
             && php artisan storage:link \
-            && cd /var/www/html/PROJETO/front-end \
+            && cd /var/www/html/test-actions/front-end \
             && npm run build \
             && nohup node .output/server/index.mjs &'
           docker exec ubuntu /bin/bash -c ' \
-            && lsof -i :3000 | awk 'NR > 1 {print $2}' > PID \
+            lsof -i :3000 | awk 'NR > 1 {print $2}' > PID \
             && service nginx restart'
