@@ -18,12 +18,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: front-end
 
       - name: Build project
         run: npm run build
+        working-directory: front-end
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: .output/
+          path: front-end/.output/
