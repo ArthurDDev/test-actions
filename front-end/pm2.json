@@ -1,0 +1,9 @@
+{
+    "apps": [
+      {
+        "name": "projeto_base",
+        "script": "node",
+        "args": ".output/server/index.mjs"
+      }
+    ]
+  }

@@ -1,0 +1,13 @@
+FROM php:7.3-fpm
+
+WORKDIR /var/www/test-actions/back-end
+
+RUN php artisan key:generate
+RUN php artisan migrate:fresh --seed
+RUN php artisan passport:install
+RUN php artisan passport:client --personal
+RUN php artisan storage:link
+
+EXPOSE 8000
+
+CMD ["php", "artisan", "serve"]
