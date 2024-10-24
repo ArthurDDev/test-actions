@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "projeto",
+      "script": "node",
+      "args": "./.output/server/index.mjs"
+    }
+  ]
+}

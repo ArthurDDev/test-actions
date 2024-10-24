@@ -1,0 +1,65 @@
+services:
+
+  node:
+    container_name: nodejs
+    restart: no
+    build:
+      context: ./front-end
+    volumes:
+      - ./front-end/:/usr/src/app
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - net
+
+  mariadb:
+    image: mariadb:latest
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=database
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./.deploy/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - net
+  
+  nginx:
+    container_name: nginx
+    restart: no
+    build:
+      context: ./back-end
+    volumes:
+      - ./.deploy/projeto.config-front:/etc/nginx/sites-available/projeto.config-front
+      - ./.deploy/projeto.config-back:/etc/nginx/sites-available/projeto.config-back
+      - ./back-end:/var/www/html/projeto/back-end/
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_DATABASE: database
+      DB_USERNAME: user
+      DB_PASSWORD: password
+    ports:
+      - "80:80"
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - net
+
+
+networks:
+  net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
