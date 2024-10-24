@@ -14,9 +14,10 @@ service nginx start
 
 echo "=================== BACK-END CONFIG ENDED ==================="
 
-sleep 10
+sleep 20
 
 echo "=================== NGINX STATUS ==================="
+service nginx restart
 service nginx status
 echo "==================================================="
 

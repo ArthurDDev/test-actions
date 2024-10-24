@@ -1,3 +1,5 @@
+npm install
+npm run build
 pm2 start script.json
 sleep 10
 # echo "=================== PM2 STOPPED ==================="
