@@ -2,6 +2,10 @@
 
 echo "=================== STARTING BACK-END ==================="
 
+RUN add-apt-repository -y ppa:ondrej/php > /dev/null
+RUN apt-get install -y php7.4
+RUN apt-get install -y php7.4-curl php7.4-cli php7.4-dev php7.4-gd php7.4-intl php7.4-json php7.4-mysql php7.4-opcache php7.4-bcmath php7.4-mbstring php7.4-soap
+
 ln -s /etc/nginx/sites-available/projeto.config-front /etc/nginx/sites-enabled/projeto.config-front
 ln -s /etc/nginx/sites-available/projeto.config-back /etc/nginx/sites-enabled/projeto.config-back
 rm /etc/nginx/sites-enabled/default
@@ -21,4 +25,5 @@ service nginx restart
 service nginx status
 echo "==================================================="
 
-tail -f /dev/null # Garante que o container nao acaba
+php-fpm
+#tail -f /dev/null # Garante que o container nao acaba

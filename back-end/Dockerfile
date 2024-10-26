@@ -22,6 +22,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY . /var/www/html/projeto/back-end/
 
 EXPOSE 8000
+EXPOSE 9000
 EXPOSE 80
 
 #RUN composer install
