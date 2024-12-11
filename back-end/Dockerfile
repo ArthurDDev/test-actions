@@ -1,3 +1,7 @@
+# =========================================== #
+# Arquivo usado pelo autodeploy - NAO ALTERAR #
+# =========================================== #
+
 FROM php:7.4-fpm
 WORKDIR /var/www/html/projeto/back-end/
 
@@ -25,10 +29,5 @@ EXPOSE 8000
 EXPOSE 9000
 EXPOSE 80
 
-#RUN composer install
-
-#RUN php artisan passport:install --force
-#RUN php artisan key:generate
-#RUN php artisan migrate:fresh --force
 
 CMD ["bash", "script.sh"]

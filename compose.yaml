@@ -1,5 +1,16 @@
+# =========================================== #
+# Arquivo usado pelo autodeploy - NAO ALTERAR #
+# =========================================== #
+#
+# Para um guia de como configurar e usar o docker compose, 
+# consulte a wiki de qualita: 
+# https://wiki-ecomp.vercel.app/docs/Guias/
+
 services:
 
+  # Container com tudo do front-end.
+  # Roda um servidor PM2 com tudo, a porta 3000 é aberta
+  # para acesso pelo nginx.
   node:
     container_name: nodejs
     restart: no
@@ -14,10 +25,17 @@ services:
       net:
         ipv4_address: 172.20.0.3
 
+  # Container com a mariadb.
+  # Roda APENAS a mariadb, o back-end está no container NGINX
+  # Os arquivos são salvos no diretório .data/ FORA DO CONTAINER
+  # Caso queira usar uma base de dados permanente (não sujeita ao docker)
+  # você pode retirar esse container e acessar a porta de uma outra mariadb.
+  # Para isso, faça as devidas mudanças no container NGINX e no .env do back
   mariadb:
     image: mariadb:latest
     restart: unless-stopped
     environment:
+      # Aqui, coloque as informações como estão no .env e no .deploy/init.sql
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=database
       - MYSQL_USER=user
@@ -28,12 +46,13 @@ services:
       timeout: 5s
       retries: 15
     volumes:
-      - ./data:/var/lib/mysql
+      - ./.data:/var/lib/mysql
       - ./.deploy/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       net:
         ipv4_address: 172.20.0.2
   
+  # Container que roda o back
   nginx:
     container_name: nginx
     restart: no
@@ -44,6 +63,7 @@ services:
       - ./.deploy/projeto.config-back:/etc/nginx/sites-available/projeto.config-back
       - ./back-end:/var/www/html/projeto/back-end/
     environment:
+      # Aqui, coloque as informações como estão no .env e no .deploy/init.sql
       DB_CONNECTION: mysql
       DB_HOST: mariadb
       DB_PORT: 3306
@@ -61,6 +81,13 @@ services:
         ipv4_address: 172.20.0.4
 
 
+# Rede que conecta todos os containers
+# Mude os endereços como quiser, mas atente-se aos
+# arquivos que necessitam desses endereços:
+#   172.20.0.2: Front-end
+#   172.20.0.3: Mariadb
+#   172.20.0.4: NGINX/Back-end
+# Para acessar o site por fora, utilize o endereço do Back-end
 networks:
   net:
     driver: bridge

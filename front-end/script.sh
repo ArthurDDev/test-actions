@@ -1,9 +1,16 @@
+#!/bin/bash
+
+# ====================================================== #
+# Script de deploy automatico do front-end - NAO ALTERAR #
+# ====================================================== #
+
 npm install
 npm run build
-pm2 start script.json
-sleep 10
-# echo "=================== PM2 STOPPED ==================="
-pm2 status
-# echo "==================================================="
 
-tail -f /dev/null # Garante que o container nao acaba
+#Inicialização do servidor
+pm2 start script.json
+
+echo "=================== CONFIGURAÇÃO DO FRONT CONCLUIDA ==================="
+
+# Garante que o container nao acabE
+tail -f /dev/null
